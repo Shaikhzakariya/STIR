@@ -1,0 +1,7 @@
+streamlit
+selenium
+pymongo
+webdriver-manager
+pandas
+requests
+Flask

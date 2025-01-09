@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Topics</title>
+</head>
+<body>
+    <button onclick="runScript()">Click here to run the script</button>
+    <div id="results"></div>
+
+    <script>
+        async function runScript() {
+            const response = await fetch('/run-script');
+            const data = await response.json();
+            const resultsDiv = document.getElementById('results');
+
+            if (data.error) {
+                resultsDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                return;
+            }
+
+            resultsDiv.innerHTML = `
+                <p>These are the most happening topics as on ${data.date_time}</p>
+                <ul>
+                    ${data.trends.map(trend => `<li>${trend}<br></li><br>`).join('')}
+
+                </ul>
+                <p>The IP address used for this query was ${data.ip_address}</p>
+                <pre>MongoDB ID: ${data._id}</pre>
+            `;
+        }
+    </script>
+</body>
+</html>
